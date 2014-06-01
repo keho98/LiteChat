@@ -15,6 +15,19 @@ public class ChatServer implements Runnable{
 		// TODO Auto-generated method stub
 		try {
 			serverSocket = new ServerSocket(PORT_NUMBER);
+			Socket clientSocket = serverSocket.accept();
+			PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+			BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+			String inputLine, outputLine;
+			outputLine = "";
+			// Initiate conversation with client
+		    out.println("Connected");
+
+		    while ((inputLine = in.readLine()) != null) {
+		        out.println(outputLine);
+		        if (outputLine.equals("Bye."))
+		            break;
+		    }
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
