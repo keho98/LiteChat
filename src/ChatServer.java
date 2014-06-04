@@ -3,18 +3,18 @@ import java.io.*;
 
 
 public class ChatServer implements Runnable{
-	static final int PORT_NUMBER = 4000;
+	static final int PORT_NUMBER = 4002;
 	private ServerSocket serverSocket = null;
 	private Socket socket = null;
 	private String message = null;
-	public ChatServer(int parseInt) {
+	public ChatServer(int socketPort) {
 		// TODO Auto-generated constructor stub
 	}
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		try {
 			serverSocket = new ServerSocket(PORT_NUMBER);
+			System.out.println("Now accepting connections");
 			Socket clientSocket = serverSocket.accept();
 			PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 			BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -32,7 +32,7 @@ public class ChatServer implements Runnable{
 			e.printStackTrace();
 		}
 		finally {
-			
+			System.out.println("Session complete.");
 		}
 	}
 	public static void main(String args[]) {
@@ -42,6 +42,7 @@ public class ChatServer implements Runnable{
 		}
 		else {
 	         server = new ChatServer(Integer.parseInt(args[0]));
+	         server.run();
 		}
 	}
 }
