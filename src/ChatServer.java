@@ -7,8 +7,9 @@ public class ChatServer implements Runnable{
 	private ServerSocket serverSocket = null;
 	private Socket socket = null;
 	private String message = null;
-	public ChatServer(int socketPort) {
-		// TODO Auto-generated constructor stub
+	private ChatProtocol protocol = null;
+	public ChatServer(ChatProtocol protocol, int socketPort) {
+		this.protocol = protocol;
 	}
 	@Override
 	public void run() {
@@ -37,12 +38,13 @@ public class ChatServer implements Runnable{
 	}
 	public static void main(String args[]) {
 		ChatServer server = null;
+		BasicChatProtocol protocol = new BasicChatProtocol();
 		if(args.length != 1) {
 			System.out.println("Usage: java ChatServer port");
 			System.exit(1);
 		}
 		else {
-	         server = new ChatServer(Integer.parseInt(args[0]));
+	         server = new ChatServer(protocol, Integer.parseInt(args[0]));
 	         server.run();
 		}
 	}
